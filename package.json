@@ -1,0 +1,22 @@
+{
+  "name": "zk-anonymous-data",
+  "version": "1.0.0",
+  "author": "waraphon",
+  "scripts": {
+    "test": "hardhat test",
+    "compile": "hardhat compile",
+    "node": "hardhat node",
+    "deploy": "hardhat run scripts/deploy.ts --network local",
+    "proof": "hardhat run scripts/zk-proof.ts --network local"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "5.0.0",
+    "@types/circomlibjs": "0.1.6",
+    "ethers": "6.13.5",
+    "hardhat": "2.22.19"
+  },
+  "dependencies": {
+    "circomlib": "2.0.5",
+    "circomlibjs": "0.1.7"
+  }
+}
