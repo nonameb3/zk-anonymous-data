@@ -1,7 +1,8 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 
-const DEFAULT_ACCOUNT = "0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e"; // harthat account
+// Do not use real private key here, just for local network
+const DEFAULT_ACCOUNT = "0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e"; // hardhat account for local network
 
 const config: HardhatUserConfig = {
   solidity: "0.8.28",
