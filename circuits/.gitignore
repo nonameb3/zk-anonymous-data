@@ -1,0 +1,5 @@
+*
+!.gitignore
+!powersOfTau28_hez_final_10.ptau
+!preimage.circom
+!*.sh

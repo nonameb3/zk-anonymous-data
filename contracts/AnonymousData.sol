@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./Verifier.sol";
+import "./Groth16Verifier.sol";
 
 contract AnonymousData {
     // The stored hash of the anonymous data (Poseidon hash)
     uint256 public storedHash;
 
     // Reference to the deployed Verifier contract
-    Verifier public verifier;
+    Groth16Verifier public verifier;
 
     // Constructor to set the Verifier contract address
     constructor(address _verifier) {
-        verifier = Verifier(_verifier);
+        verifier = Groth16Verifier(_verifier);
     }
 
     // Function to store the hash of the anonymous data

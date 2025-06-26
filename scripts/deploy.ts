@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 
 async function main() {
   // Deploy the Verifier contract
-  const Verifier = await ethers.getContractFactory("Verifier");
+  const Verifier = await ethers.getContractFactory("Groth16Verifier");
   const verifier = await Verifier.deploy();
   await verifier.waitForDeployment();
   console.log("Verifier deployed to:", await verifier.getAddress());

@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 import * as fs from "fs";
 
 async function main() {
-  const contractAddress = "0xB581C9264f59BF0289fA76D61B2D0746dCE3C30D"; // Update with new anonymous data contract address
+  const contractAddress = "0x1234"; // Update with new anonymous data contract address
   const anonymousData = await ethers.getContractAt("AnonymousData", contractAddress);
 
   console.log("Verifier address:", await anonymousData.verifier());

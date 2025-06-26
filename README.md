@@ -16,19 +16,19 @@ This project demonstrates a zero-knowledge proof (zk-SNARK) system using circom 
 ## Prerequisites
 
 - **Node.js**: v22.14.0 or compatible.
-- **npm**: Package manager.
-- **circom**: 2.1.9 (`npm install -g circom@latest`).
-- **snarkjs**: `npm install -g snarkjs`.
-- **Hardhat**: `npm install --save-dev hardhat`.
-- **circomlibjs**: `npm install circomlibjs`.
-- **ethers**: `npm install ethers`.
+- **pnpm**: Package manager.
+- **circom**: 2.1.9 (`pnpm install -g circom@latest`).
+- **snarkjs**: `pnpm install -g snarkjs`.
+- **Hardhat**: `pnpm install --save-dev hardhat`.
+- **circomlibjs**: `pnpm install circomlibjs`.
+- **ethers**: `pnpm install ethers`.
 
 ## Project Structure
 
 ```
 zk-age-proof/
 ├── circuits/
-│   ├── preimage.circom         # Circuit definition
+│   ├── preimage.circom        # Circuit definition
 │   ├── preimage.r1cs          # Compiled R1CS
 │   ├── preimage_0001.zkey     # Proving key
 │   ├── preimage_js/           # WASM and witness calculator
@@ -36,7 +36,7 @@ zk-age-proof/
 │   ├── public.json            # Public signals
 │   └── witness.wtns           # Witness file
 ├── contracts/
-│   ├── Verifier.sol           # Verifier contract
+│   ├── Groth16Verifier.sol    # Verifier contract
 │   └── AnonymousData.sol      # Main contract
 ├── scripts/
 │   ├── deploy.ts              # Deployment script
@@ -53,43 +53,18 @@ zk-age-proof/
 ### 1. Install Dependencies
 
 ```bash
-npm install
+pnpm install
 ```
 
-### 2. Compile the Circuit
+### Setup ZK Circuit
+
+Run the automated setup script:
 
 ```bash
-cd circuits
-circom ../circuits/preimage.circom --r1cs --wasm --sym -o .
+./circuits/setup-zkp.sh
 ```
 
-Outputs: `preimage.r1cs`, `preimage_js/preimage.wasm`, `preimage_js/witness_calculator.js`.
-
-### 3. Generate Trusted Setup
-
-Download powersOfTau28_hez_final_10.ptau (or use an existing one):
-
-```bash
-curl -L https://hermez.s3-eu-west-1.amazonaws.com/powersOfTau28_hez_final_10.ptau -o powersOfTau28_hez_final_10.ptau
-```
-
-Generate proving and verification keys:
-
-```bash
-snarkjs groth16 setup preimage.r1cs powersOfTau28_hez_final_10.ptau preimage_0000.zkey
-snarkjs zkey contribute preimage_0000.zkey preimage_0001.zkey --name="Second contribution" -v
-snarkjs zkey export verificationkey preimage_0001.zkey vkey.json
-```
-
-Outputs: `preimage_0001.zkey`, `vkey.json`.
-
-### 4. Export Verifier Contract
-
-```bash
-snarkjs zkey export solidityverifier preimage_0001.zkey ../contracts/Verifier.sol
-```
-
-Output: `Verifier.sol`.
+This handles steps 1: circuit compilation, trusted setup, and verifier contract export.
 
 ## Usage
 
@@ -122,7 +97,7 @@ Update `input.json`:
 }
 ```
 
-### 3. Generate Witness and Proof
+### 3. Generate Witness and Proof from input.json
 
 ```bash
 cd circuits
@@ -135,6 +110,7 @@ Outputs: `witness.wtns`, `proof.json`, `public.json`.
 ### 4. Verify Off-Chain
 
 ```bash
+cd circuits
 snarkjs groth16 verify vkey.json public.json proof.json
 ```
 
@@ -142,14 +118,14 @@ Expected: `[INFO] snarkJS: OK!`.
 
 ### 5. Run hardhat node
 ```bash
-npm run node
+pnpm run node
 ```
 Start hardhat node
 
 ### 5. Deploy Contracts
 
 ```bash
-npm run deploy
+pnpm run deploy
 ```
 
 Outputs contract addresses (e.g., Verifier: 0xd8E4Af..., AnonymousData: 0xE634d8...).
@@ -158,7 +134,7 @@ Update `zk-proof.ts` with the AnonymousData address.
 ### 6. Verify On-Chain
 
 ```bash
-npm run proof
+pnpm run proof
 ```
 
 Expected output:
